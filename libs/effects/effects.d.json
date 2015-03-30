@@ -1,0 +1,8 @@
+{
+	"file_list": [
+		"SplitSystem.js",
+		"Emitter.js",
+		"Provider.js",
+		"provider/Random.js"
+	]
+}

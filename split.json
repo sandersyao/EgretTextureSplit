@@ -1,0 +1,13 @@
+{
+    "name": "split",
+    "dependence": ["core"],
+    "source":"src/split/",
+    "file_list": [
+        "SplitSystem.ts",
+        "Emitter.ts",
+        "Pattern.ts",
+        "pattern/Rectangle.ts",
+        "Provider.ts",
+        "provider/Random.ts"
+    ]
+}

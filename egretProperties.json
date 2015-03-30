@@ -1,0 +1,24 @@
+{
+    "document_class": "Main",
+    "modules": [
+        {
+            "name": "core"
+        },
+        {
+            "name":"res"
+        },
+        {
+            "name": "gui"
+        },
+        {
+            "name": "split",
+            "path": "."
+        }
+    ],
+    "native": {
+        "path_ignore": [
+
+        ]
+    },
+    "egret_version":"1.6.0"
+}
