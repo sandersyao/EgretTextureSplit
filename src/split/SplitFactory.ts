@@ -25,7 +25,7 @@ module split {
                 split.SplitFactory._instance    = new split.SplitFactory;
             }
 
-            return  split.SplitFactory;
+            return  split.SplitFactory._instance;
         }
 
         /**
@@ -37,8 +37,8 @@ module split {
         public create (target:egret.DisplayObject, configData:any):split.SplitSystem {
 
             var system  = new split.SplitSystem(target, configData.area);
-            system.setProvider(configData.provider);
             system.setPattern(configData.pattern);
+            system.setProvider(configData.provider);
 
             return  system;
         }
