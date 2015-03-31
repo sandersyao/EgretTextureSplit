@@ -1,0 +1,18 @@
+{
+    "area" : {
+        "x"         : 0,
+        "y"         : 0,
+        "width"     : 0,
+        "height"    : 0
+    },
+    "provider"  : {
+        "name"      : "Random",
+        "isLoop"    : false
+    },
+    "pattern"   : {
+        "name"      : "Rectangle",
+        "width"     : 1,
+        "height"    : 0,
+        "numClone"  : 1
+    }
+}

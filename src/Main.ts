@@ -137,27 +137,11 @@ class Main extends egret.DisplayObjectContainer {
 
         var texture:egret.Texture                       = RES.getRes("heart"),
             bmp:egret.Bitmap                            = new egret.Bitmap(texture),
-            area:{x:number;y:number;width:number;height:number} = {
-            x   : 0,
-            y   : 0,
-            width:  texture.textureWidth,
-            height: texture.textureHeight
-        },
-            splitSystem:split.SplitSystem = new split.SplitSystem(bmp, area);
-
-        splitSystem.pattern({
-            name        : 'Rectangle',
-            width       : 1,
-            height      : texture.textureHeight,
-            numClone    : 1
-        });
+            splitData:any                               = RES.getRes("split_dissolve_horizon");
+        var splitSystem:split.SplitSystem = split.SplitFactory.getInstance().create(bmp, splitData);
         splitSystem.x   = 200;
         splitSystem.y   = 200;
         splitSystem.showFirst();
-        splitSystem.setProvider({
-            name    : 'Random',
-            isLoop  : true
-        });
         var emitter     = splitSystem.emit({
             transform   : {alpha:0},
             fraquency   : 100,

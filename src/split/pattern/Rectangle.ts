@@ -3,16 +3,34 @@
  */
 module split.pattern {
 
+    /**
+     * 切割模型 矩形
+     */
     export class Rectangle  extends split.Pattern {
 
+        /**
+         * 所在系统
+         */
         private _system:split.SplitSystem;
 
+        /**
+         * 矩形
+         */
         private _rectangle:any;
 
+        /**
+         * 宽度
+         */
         private _clipWidth:number;
 
+        /**
+         * 高度
+         */
         private _clipHeight:number;
 
+        /**
+         * 复制个数
+         */
         private _numClone:number;
 
         /**
@@ -28,8 +46,8 @@ module split.pattern {
             super();
             this._rectangle     = new egret.Rectangle;
             this._system        = system;
-            this._clipWidth     = width;
-            this._clipHeight    = height;
+            this._clipWidth     = 0 == width    ? system.box.width  : width;
+            this._clipHeight    = 0 == height   ? system.box.height : height;
             this._numClone      = numClone;
         }
 

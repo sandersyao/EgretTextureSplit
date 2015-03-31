@@ -3,16 +3,33 @@
  */
 module split.provider {
 
+    /**
+     * 供应器 随机
+     */
     export class Random extends split.Provider {
 
+        /**
+         * 对象池键列表
+         */
         private _poolKeyList:Array<string>;
 
+        /**
+         * 构造函数
+         *
+         * @param system
+         * @param isLoop
+         */
         public constructor (system:split.SplitSystem, isLoop:boolean = false) {
 
             super(system, isLoop);
             this._initKeys();
         }
 
+        /**
+         * 获取对象列表
+         *
+         * @returns {*}
+         */
         public getBmpList ():any {
 
             if (!this.isLoop && this.times == this._poolKeyList.length) {
@@ -29,6 +46,11 @@ module split.provider {
             return  [bmp];
         }
 
+        /**
+         * 初始化池键列表
+         *
+         * @private
+         */
         private _initKeys ():void {
 
             var keyList:Array<string> = [];

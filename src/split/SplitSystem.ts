@@ -3,6 +3,9 @@
  */
 module split {
 
+    /**
+     * 切割体系
+     */
     export class   SplitSystem extends egret.DisplayObjectContainer{
 
         /**
@@ -41,14 +44,17 @@ module split {
             this._target    = target;
             this._box       = box;
 
-            if (0 == (this._box.width | this._box.height)) {
+            if (0 == box.x | box.y | box.width | box.height) {
 
-                this._box.width     = this._target.width;
-                this._box.height    = this._target.height;
+                this._box.width = target.width;
+                this._box.height = target.height;
             }
         }
 
-        public  showFirst () {
+        /**
+         * 显示池中第一组对象
+         */
+        public  showFirst ():void {
 
             for (var attr in this._poolClips) {
 
@@ -58,21 +64,41 @@ module split {
             }
         }
 
+        /**
+         * 获取区域
+         *
+         * @returns {{x: number, y: number, width: number, height: number}}
+         */
         public get box ():{x:number;y:number;width:number;height:number} {
 
             return  this._box;
         }
 
+        /**
+         * 获取目标
+         *
+         * @returns {egret.DisplayObject}
+         */
         public get target ():egret.DisplayObject {
 
             return  this._target;
         }
 
+        /**
+         * 获取池
+         *
+         * @returns {Object}
+         */
         public get pool ():Object {
 
             return  this._poolClips;
         }
 
+        /**
+         * 获取供应器
+         *
+         * @returns {split.Provider}
+         */
         public  get provider ():split.Provider {
 
             return  this._provider;
@@ -97,7 +123,7 @@ module split {
         }
 
         /**
-         *  获取供应器
+         *  配置供应器
          *
          * @param prividerConfig
          */
@@ -119,7 +145,7 @@ module split {
          *
          * @params patternConfig
          */
-        public  pattern (patternConfig:{name:string;width:number;height:number;numClone:number}):void {
+        public  setPattern (patternConfig:{name:string;width:number;height:number;numClone:number}):void {
 
             if ('undefined' == typeof window['split'].pattern[patternConfig.name]) {
 

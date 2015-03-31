@@ -3,6 +3,7 @@
     "dependence": ["core"],
     "source":"src/split/",
     "file_list": [
+        "SplitFactory.ts",
         "SplitSystem.ts",
         "Emitter.ts",
         "Pattern.ts",
