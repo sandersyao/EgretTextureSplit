@@ -44,7 +44,7 @@ module split {
             this._target    = target;
             this._box       = box;
 
-            if (0 == box.x | box.y | box.width | box.height) {
+            if (0 == (box.x | box.y | box.width | box.height)) {
 
                 this._box.width = target.width;
                 this._box.height = target.height;
