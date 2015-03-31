@@ -131,13 +131,15 @@ class Main extends egret.DisplayObjectContainer {
         this.guiLayer.addElement(button);
     }
 
+    private buildConsole ():void {}
+
     private onButtonClick(event: egret.TouchEvent): void {
 
         this.guiLayer.removeAllElements();
 
-        var texture:egret.Texture                       = RES.getRes("heart"),
-            bmp:egret.Bitmap                            = new egret.Bitmap(texture),
-            splitData:any                               = RES.getRes("split_dissolve_horizon");
+        var texture:egret.Texture   = RES.getRes("heart"),
+            bmp:egret.Bitmap        = new egret.Bitmap(texture),
+            splitData:any           = RES.getRes("split_dissolve_vertical");
         var splitSystem:split.SplitSystem = split.SplitFactory.getInstance().create(bmp, splitData);
         splitSystem.x   = 200;
         splitSystem.y   = 200;
