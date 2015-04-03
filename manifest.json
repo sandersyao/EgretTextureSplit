@@ -4,6 +4,7 @@
     "skins/simple/VScrollBarThumbSkin.exml",
     "AssetAdapter.ts",
     "LoadingUI.ts",
+    "ControlPanel.ts",
     "skins/simple/CloseButtonSkin.exml",
     "skins/simple/DropDownListItemRendererSkin.exml",
     "skins/simple/DropDownListOpenButtonSkin.exml",

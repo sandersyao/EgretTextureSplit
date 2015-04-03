@@ -99,9 +99,11 @@ class Main extends egret.DisplayObjectContainer {
         }
     }
 
-    private gameLayer: egret.DisplayObjectContainer;
+    private _gameLayer: egret.DisplayObjectContainer;
 
     private guiLayer: egret.gui.UIStage;
+
+    private _panel:ControlPanel;
     /**
      * 创建场景界面
      * Create scene interface
@@ -110,47 +112,32 @@ class Main extends egret.DisplayObjectContainer {
 
         //游戏场景层，游戏场景相关内容可以放在这里面。
         //Game scene layer, the game content related to the scene can be placed inside this layer.
-        this.gameLayer = new egret.DisplayObjectContainer();
-        this.addChild(this.gameLayer);
+        this._gameLayer = new egret.DisplayObjectContainer();
+        this.addChild(this._gameLayer);
         var bitmap: egret.Bitmap = new egret.Bitmap();
         bitmap.texture = RES.getRes("bgImage");
-        this.gameLayer.addChild(bitmap);
+        this._gameLayer.addChild(bitmap);
 
         //GUI的组件必须都在这个容器内部,UIStage会始终自动保持跟舞台一样大小。
         //GUI components must be within the container, UIStage will always remain the same as stage size automatically.
         this.guiLayer = new egret.gui.UIStage();
         this.addChild(this.guiLayer);
-
-        var button: egret.gui.Button = new egret.gui.Button();
-        button.horizontalCenter = 0;
-        button.verticalCenter = 0;
-        button.label = "click";
-        button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
-        //在GUI范围内一律使用addElement等方法替代addChild等方法。
-        //Within GUI scope, addChild methods should be replaced by addElement methods.
-        this.guiLayer.addElement(button);
+        this._buildPanel();
     }
 
-    private buildConsole ():void {}
+    private _buildPanel ():void {
 
-    private onButtonClick(event: egret.TouchEvent): void {
+        var dataList                = RES.getRes('split_data_list'),
+            texture:egret.Texture   = RES.getRes("heart"),
+            bmp:egret.Bitmap        = new egret.Bitmap(texture);
 
-        this.guiLayer.removeAllElements();
+        this._panel      = new ControlPanel(this, bmp, dataList);
+        this.guiLayer.addElement(this._panel);
+    }
 
-        var texture:egret.Texture   = RES.getRes("heart"),
-            bmp:egret.Bitmap        = new egret.Bitmap(texture),
-            splitData:any           = RES.getRes("split_dissolve_vertical");
-        var splitSystem:split.SplitSystem = split.SplitFactory.getInstance().create(bmp, splitData);
-        splitSystem.x   = 200;
-        splitSystem.y   = 200;
-        splitSystem.showFirst();
-        var emitter     = splitSystem.emit({
-            transform   : {alpha:0},
-            fraquency   : 100,
-            duration    : 100
-        });
-        this.gameLayer.addChild(splitSystem);
-        emitter.start();
+    public get gameLayer ():egret.DisplayObjectContainer {
+
+        return  this._gameLayer;
     }
 }
 

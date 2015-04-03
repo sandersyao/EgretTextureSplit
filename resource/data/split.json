@@ -1,0 +1,18 @@
+[
+    {
+        "resource_name" : "split_horizon",
+        "text_name"     : "水平"
+    },
+    {
+        "resource_name" : "split_vertical",
+        "text_name"     : "垂直"
+    },
+    {
+        "resource_name" : "split_1pixel",
+        "text_name"     : "一像素"
+    },
+    {
+        "resource_name" : "split_square",
+        "text_name"     : "正方"
+    }
+]
