@@ -37,17 +37,29 @@ module split {
          * 构造函数
          *
          * @param target    目标
+         * @param box       区域
          */
         public  constructor (target:egret.DisplayObject, box:{x:number;y:number;width:number;height:number}) {
 
             super();
             this._target    = target;
-            this._box       = box;
+            this._box       = {
+                x       : null,
+                y       : null,
+                width   : null,
+                height  : null
+            };
+            this._box.x     = box.x;
+            this._box.y     = box.y;
 
             if (0 == (box.x | box.y | box.width | box.height)) {
 
-                this._box.width = target.width;
-                this._box.height = target.height;
+                this._box.width     = target.width;
+                this._box.height    = target.height;
+            } else {
+
+                this._box.width     = box.width;
+                this._box.height    = box.height;
             }
         }
 
@@ -112,7 +124,7 @@ module split {
          */
         public  emit (emitterConfig:{transform:Object;fraquency:number;duration:number}):split.Emitter {
 
-            var emitter = new split.Emitter(
+            var emitter:split.Emitter   = new split.Emitter(
                 this,
                 emitterConfig.transform,
                 emitterConfig.fraquency,
@@ -125,17 +137,17 @@ module split {
         /**
          *  配置供应器
          *
-         * @param prividerConfig
+         * @param providerConfig
          */
-        public  setProvider (prividerConfig:{name:string;isLoop:boolean}):void {
+        public  setProvider (providerConfig:any):void {
 
-            if ('undefined' == typeof window['split'].provider[prividerConfig.name]) {
+            if ('undefined' == typeof window['split'].provider[providerConfig.name]) {
 
-                throw 'provider not exists';
+                throw 'provider ' + providerConfig.name + ' not exists';
             }
 
-            var provider    = Object.create(window['split'].provider[prividerConfig.name].prototype);
-            provider.constructor.apply(provider, [this, prividerConfig.isLoop]);
+            var provider    = Object.create(window['split'].provider[providerConfig.name].prototype);
+            provider.constructor.apply(provider, [this, providerConfig]);
 
             this._provider  = provider;
         }
@@ -145,15 +157,15 @@ module split {
          *
          * @params patternConfig
          */
-        public  setPattern (patternConfig:{name:string;width:number;height:number;numClone:number}):void {
+        public  setPattern (patternConfig:any):void {
 
             if ('undefined' == typeof window['split'].pattern[patternConfig.name]) {
 
-                throw 'pattern not exists';
+                throw 'pattern ' + patternConfig.name + ' not exists';
             }
 
             var pattern = Object.create(window['split'].pattern[patternConfig.name].prototype);
-            pattern.constructor.apply(pattern, [this, patternConfig.width, patternConfig.height,patternConfig.numClone]);
+            pattern.constructor.apply(pattern, [this, patternConfig]);
             this._pattern  = pattern;
             pattern.initPool();
         }

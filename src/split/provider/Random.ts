@@ -17,11 +17,11 @@ module split.provider {
          * 构造函数
          *
          * @param system
-         * @param isLoop
+         * @param config
          */
-        public constructor (system:split.SplitSystem, isLoop:boolean = false) {
+        public constructor (system:split.SplitSystem, config:{isLoop:boolean}) {
 
-            super(system, isLoop);
+            super(system, config);
             this._initKeys();
         }
 

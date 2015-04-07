@@ -1,18 +1,40 @@
-[
-    {
-        "resource_name" : "split_horizon",
-        "text_name"     : "水平"
-    },
-    {
-        "resource_name" : "split_vertical",
-        "text_name"     : "垂直"
-    },
-    {
-        "resource_name" : "split_1pixel",
-        "text_name"     : "一像素"
-    },
-    {
-        "resource_name" : "split_square",
-        "text_name"     : "正方"
-    }
-]
+{
+    "patterns"  : [
+        {
+            "resource_name" : "pattern_horizon",
+            "text_name"     : "水平"
+        },
+        {
+            "resource_name" : "pattern_vertical",
+            "text_name"     : "垂直"
+        },
+        {
+            "resource_name" : "pattern_1pixel",
+            "text_name"     : "一像素"
+        },
+        {
+            "resource_name" : "pattern_square",
+            "text_name"     : "正方"
+        }
+    ],
+    "emitters"  : [
+        {
+            "resource_name" : "emitter_fade_in",
+            "text_name"     : "渐显"
+        },
+        {
+            "resource_name" : "emitter_fade_out",
+            "text_name"     : "渐隐"
+        }
+    ],
+    "providers" : [
+        {
+            "resource_name" : "provider_random",
+            "text_name"     : "随机"
+        },
+        {
+            "resource_name" : "provider_random_loop",
+            "text_name"     : "随机循环"
+        }
+    ]
+}

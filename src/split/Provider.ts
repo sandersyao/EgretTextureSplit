@@ -30,12 +30,12 @@ module  split {
          * 构造函数
          *
          * @param system
-         * @param isLoop
+         * @param config
          */
-        public  constructor (system:split.SplitSystem, isLoop:boolean = false) {
+        public  constructor (system:split.SplitSystem, config:{isLoop:boolean}) {
 
             this._system    = system;
-            this._isLoop    = isLoop;
+            this._isLoop    = null === config.isLoop    ? false : config.isLoop;
         }
 
         /**

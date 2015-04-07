@@ -37,18 +37,16 @@ module split.pattern {
          * 构造函数
          *
          * @param system
-         * @param width
-         * @param height
-         * @param numClone
+         * @param config
          */
-        public constructor (system:split.SplitSystem, width:number = 0, height:number = 0, numClone:number = 1) {
+        public constructor (system:split.SplitSystem, config:{width:number;height:number;numClone:number}) {
 
             super();
             this._rectangle     = new egret.Rectangle;
             this._system        = system;
-            this._clipWidth     = 0 == width    ? system.box.width  : width;
-            this._clipHeight    = 0 == height   ? system.box.height : height;
-            this._numClone      = numClone;
+            this._clipWidth     = 0 == config.width     ? system.box.width  : config.width;
+            this._clipHeight    = 0 == config.height    ? system.box.height : config.height;
+            this._numClone      = config.numClone;
         }
 
         /**
