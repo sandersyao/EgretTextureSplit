@@ -31,7 +31,7 @@ class ControlPanel extends egret.gui.Group {
     /**
      * 低端容器
      */
-    private _bottomContainer:egret.gui.Group;
+    private _rightContainer:egret.gui.Group;
 
     /**
      * 跟容器
@@ -54,9 +54,24 @@ class ControlPanel extends egret.gui.Group {
     private _currentData:any;
 
     /**
+     * 原图容器
+     */
+    private _originContainer:egret.DisplayObjectContainer;
+
+    /**
+     * 分割系统容器
+     */
+    private _systemContainer:egret.DisplayObjectContainer;
+
+    /**
      * 当前纹理
      */
     private _currentGraphic:egret.DisplayObject;
+
+    /**
+     * 是否首次显示
+     */
+    private _showFist:boolean;
 
     /**
      * 构造函数
@@ -68,9 +83,12 @@ class ControlPanel extends egret.gui.Group {
     public constructor (root:Main, graphic:egret.DisplayObject, data:any) {
 
         super();
+
         this._currentData                   = {};
         this._root                          = root;
         this._currentGraphic                = graphic;
+        this._originContainer               = new egret.DisplayObjectContainer;
+        this._systemContainer               = new egret.DisplayObjectContainer;
         this._listData                      = {
             pattern     : new egret.gui.ArrayCollection(data.patterns),
             provider    : new egret.gui.ArrayCollection(data.providers),
@@ -78,17 +96,19 @@ class ControlPanel extends egret.gui.Group {
         };
         this.percentHeight                  = 50;
         this.percentWidth                   = 100;
-        this.layout                         = new egret.gui.VerticalLayout;
+        this.layout                         = new egret.gui.HorizontalLayout;
         this._listContainer                 = new egret.gui.Group;
-        this._bottomContainer               = new egret.gui.Group;
+        this._rightContainer               = new egret.gui.Group;
         this._listContainer.layout          = new egret.gui.HorizontalLayout;
-        this._bottomContainer.layout        = new egret.gui.HorizontalLayout;
-        this._listContainer.percentWidth    = 100;
-        this._listContainer.percentHeight   = 80;
-        this._bottomContainer.percentWidth  = 100;
-        this._bottomContainer.percentHeight = 20;
+        this._rightContainer.layout        = new egret.gui.VerticalLayout;
+        this._listContainer.percentWidth    = 75;
+        this._listContainer.percentHeight   = 100;
+        this._rightContainer.percentWidth  = 25;
+        this._rightContainer.percentHeight = 100;
         this.addElement(this._listContainer);
-        this.addElement(this._bottomContainer);
+        this.addElement(this._rightContainer);
+        this._root.gameLayer.addChild(this._originContainer);
+        this._root.gameLayer.addChild(this._systemContainer);
     }
 
     /**
@@ -164,18 +184,58 @@ class ControlPanel extends egret.gui.Group {
         var buttonPlay:egret.gui.Button         = new egret.gui.Button,
             buttonStop:egret.gui.Button         = new egret.gui.Button,
             buttonReset:egret.gui.Button        = new egret.gui.Button,
-            checkLoop:egret.gui.CheckBox        = new egret.gui.CheckBox,
-            checkShowOrigin:egret.gui.CheckBox  = new egret.gui.CheckBox;
+            checkShowOrigin:egret.gui.CheckBox  = new egret.gui.CheckBox,
+            checkShowFirst:egret.gui.CheckBox   = new egret.gui.CheckBox;
         buttonPlay.label                        = '播放';
+        buttonPlay.width                        = 100;
         buttonStop.label                        = '停止';
+        buttonStop.width                        = 100;
         buttonReset.label                       = '重置';
-        checkLoop.label                         = '循环';
+        buttonReset.width                       = 100;
         checkShowOrigin.label                   = '显示原图';
+        checkShowFirst.label                    = '首次显示';
+        checkShowFirst.addEventListener(egret.Event.CHANGE, this._toggleShowFirst, this)
+        checkShowOrigin.addEventListener(egret.Event.CHANGE, this._toggleShowOrigin, this);
         buttonPlay.addEventListener(egret.TouchEvent.TOUCH_TAP, this._play, this);
         buttonStop.addEventListener(egret.TouchEvent.TOUCH_TAP, this._stop, this);
         buttonReset.addEventListener(egret.TouchEvent.TOUCH_TAP, this._cleanStage, this);
-        this._bottomContainer.addElement(buttonPlay);
-        this._bottomContainer.addElement(buttonStop);
+        this._rightContainer.addElement(checkShowOrigin);
+        this._rightContainer.addElement(checkShowFirst);
+        this._rightContainer.addElement(buttonPlay);
+        this._rightContainer.addElement(buttonStop);
+        this._rightContainer.addElement(buttonReset);
+    }
+
+    /**
+     * 切换首次显示
+     *
+     * @param event
+     * @private
+     */
+    private _toggleShowFirst (event:egret.Event):void {
+
+        this._showFist  = event.target.selected;
+    }
+
+    /**
+     * 切换显示原图
+     *
+     * @param event
+     * @private
+     */
+    private _toggleShowOrigin (event:egret.Event):void {
+
+        this._currentGraphic.x  = (this.stage.stageWidth - this._currentGraphic.width) / 2;
+        this._currentGraphic.y  = (this.stage.stageHeight / 2) + (this.stage.stageHeight / 4) - (this._currentGraphic.width / 2);
+
+        if (event.target.selected && this._currentGraphic.parent != this._originContainer) {
+
+            this._originContainer.addChild(this._currentGraphic);
+
+        } else if (!event.target.selected && this._currentGraphic.parent == this._originContainer) {
+
+            this._originContainer.removeChild(this._currentGraphic);
+        }
     }
 
     /**
@@ -190,7 +250,6 @@ class ControlPanel extends egret.gui.Group {
 
         this._cleanStage();
         this._currentData[key]  = this._listData[key].getItemAt(event.newIndex);
-        this._buildStage();
     }
 
     /**
@@ -227,8 +286,13 @@ class ControlPanel extends egret.gui.Group {
         this._emitter   = this._system.emit(emitterData);
         this._system.x  = (this.stage.stageWidth - this._system.width) / 2;
         this._system.y  = (this.stage.stageHeight / 2) + (this.stage.stageHeight / 4) - (this._system.width / 2);
-        this._system.showFirst();
-        this._root.gameLayer.addChild(this._system);
+
+        if (this._showFist) {
+
+            this._system.showFirst();
+        }
+
+        this._systemContainer.addChild(this._system);
     }
 
     /**
@@ -237,6 +301,8 @@ class ControlPanel extends egret.gui.Group {
      * @private
      */
     private _play ():void {
+
+        this._buildStage();
 
         if (this._emitter) {
 
@@ -266,9 +332,9 @@ class ControlPanel extends egret.gui.Group {
 
         this._stop();
 
-        if (this._system && this._system.parent == this._root.gameLayer) {
+        if (this._system && this._system.parent == this._systemContainer) {
 
-            this._root.gameLayer.removeChild(this._system);
+            this._systemContainer.removeChild(this._system);
         }
     }
 }
