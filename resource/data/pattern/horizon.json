@@ -1,6 +1,6 @@
 {
     "name"      : "Rectangle",
-    "width"     : 1,
-    "height"    : 0,
+    "width"     : 0,
+    "height"    : 1,
     "numClone"  : 1
 }

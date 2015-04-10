@@ -29,17 +29,29 @@ module split {
         private _system:split.SplitSystem;
 
         /**
+         * 初始化
+         */
+        private _initial:Object;
+
+        /**
+         * 回调方法
+         */
+        private _callback:any;
+
+        /**
          * 碎片池
          *
          * @param system
          * @param transform
          * @param duration
          */
-        public  constructor (system:split.SplitSystem, transform:any, frequency:number, duration:number) {
+        public  constructor (system:split.SplitSystem, initial:any, transform:any, frequency:number, duration:number, callback:any = null) {
 
             this._system    = system;
+            this._initial   = initial;
             this._transform = transform;
             this._duration  = duration;
+            this._callback  = callback;
             this._timer     = new egret.Timer(frequency, 0);
             this._timer.addEventListener(egret.TimerEvent.TIMER, this.update, this);
         }
@@ -77,16 +89,21 @@ module split {
 
                 if (me._system != clip.parent) {
 
+                    me._initialize(clip);
                     me._system.addChild(clip);
                 }
 
                 if ('object' == typeof me._transform) {
 
+                    egret.Tween.removeTweens(clip);
                     egret.Tween.get(clip).to(me._transform, me._duration).call(function () {
 
-                        if (me._system == clip.parent) {
+                        egret.Tween.pauseTweens(clip);
+                        egret.Tween.removeTweens(clip);
 
-                            me._system.removeChild(clip);
+                        if ('function' == typeof me._callback) {
+
+                            me._callback(clip);
                         }
                     }, me);
                 } else if ('function' == typeof me._transform) {
@@ -94,6 +111,20 @@ module split {
                     me._transform.apply(me, [clip]);
                 }
             }, this);
+        }
+
+        /**
+         * 目标
+         *
+         * @param target
+         * @private
+         */
+        private _initialize (target:any) {
+
+            for (var attr in this._initial) {
+
+                target[attr]    = this._initial[attr];
+            }
         }
     }
 }
