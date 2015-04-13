@@ -25,6 +25,10 @@
         {
             "resource_name" : "emitter_fade_out",
             "text_name"     : "渐隐"
+        },
+        {
+            "resource_name" : "emitter_fly_out",
+            "text_name"     : "飞离"
         }
     ],
     "providers" : [

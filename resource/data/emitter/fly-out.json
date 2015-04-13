@@ -1,0 +1,12 @@
+{
+    "initial"   : {
+        "alpha" : 100
+    },
+    "transform" : {
+        "alpha" : 0,
+        "x"     : -150,
+        "y"     : -150
+    },
+    "frequency" : 100,
+    "duration"  : 1000
+}
