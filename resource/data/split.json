@@ -29,6 +29,10 @@
         {
             "resource_name" : "emitter_fly_out",
             "text_name"     : "飞离"
+        },
+        {
+            "resource_name" : "emitter_fly_in",
+            "text_name"     : "飞入"
         }
     ],
     "providers" : [
