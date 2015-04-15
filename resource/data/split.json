@@ -43,6 +43,10 @@
         {
             "resource_name" : "provider_random_loop",
             "text_name"     : "随机循环"
+        },
+        {
+            "resource_name" : "provider_order_lr",
+            "text_name"     : "从左至右"
         }
     ]
 }

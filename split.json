@@ -9,6 +9,7 @@
         "Pattern.ts",
         "pattern/Rectangle.ts",
         "Provider.ts",
-        "provider/Random.ts"
+        "provider/Random.ts",
+        "provider/OrderLR.ts"
     ]
 }

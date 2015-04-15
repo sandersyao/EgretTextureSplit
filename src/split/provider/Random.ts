@@ -14,15 +14,28 @@ module split.provider {
         private _poolKeyList:Array<string>;
 
         /**
+         * 数量
+         *
+         * @type {number}
+         * @private
+         */
+        private _multi:number   = 1;
+
+        /**
          * 构造函数
          *
          * @param system
          * @param config
          */
-        public constructor (system:split.SplitSystem, config:{isLoop:boolean}) {
+        public constructor (system:split.SplitSystem, config:any) {
 
             super(system, config);
             this._initKeys();
+
+            if (config.multi) {
+
+                this._multi = config.multi;
+            }
         }
 
         /**
@@ -32,18 +45,25 @@ module split.provider {
          */
         public getBmpList ():any {
 
-            if (!this.isLoop && this.times == this._poolKeyList.length) {
+            if (!this.isLoop && this.times >= Math.ceil(this._poolKeyList.length / this._multi)) {
 
                 return  false;
             }
 
             super.getBmpList();
-            var key:string  = this._poolKeyList.shift(),
-                bmp:egret.Bitmap    = this.system.pool[key].shift();
-            this.system.pool[key].push(bmp);
-            this._poolKeyList.push(key);
 
-            return  [bmp];
+            var list:Array<any> = [];
+
+            for (var offset:number = 0; offset < this._multi; offset++) {
+
+                var key:string = this._poolKeyList.shift(),
+                    bmp:egret.Bitmap = this.system.pool[key].shift();
+                this.system.pool[key].push(bmp);
+                this._poolKeyList.push(key);
+                list.push(bmp);
+            }
+
+            return  list;
         }
 
         /**

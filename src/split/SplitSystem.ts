@@ -44,10 +44,10 @@ module split {
             super();
             this._target    = target;
             this._box       = {
-                x       : null,
-                y       : null,
-                width   : null,
-                height  : null
+                "x"       : null,
+                "y"       : null,
+                "width"   : null,
+                "height"  : null
             };
             this._box.x     = box.x;
             this._box.y     = box.y;

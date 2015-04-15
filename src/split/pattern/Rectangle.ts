@@ -85,7 +85,7 @@ module split.pattern {
          */
         private _setPool (x:number, y:number, texture:egret.Texture):void {
 
-            var key:string = this._generatePoolKey(x, y);
+            var key:string = split.Pattern.generatePoolKey(x, y);
 
             if (!(this._system.pool[key] instanceof Array)) {
 
@@ -121,19 +121,6 @@ module split.pattern {
                 }
             }
             return  false;
-        }
-
-        /**
-         *  获取池键
-         *
-         * @param x             横轴坐标
-         * @param y             纵轴坐标
-         * @returns {string}    键
-         * @private
-         */
-        private _generatePoolKey (x:number, y:number):string {
-
-            return  '_' + x + '_' + y;
         }
     }
 }
