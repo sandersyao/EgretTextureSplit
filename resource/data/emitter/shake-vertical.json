@@ -1,7 +1,5 @@
 {
-    "initial"   : {
-        "alpha" : 100
-    },
+    "initial"   : {},
     "transform" : [
         {
             "attributes"    : {
