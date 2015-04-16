@@ -1,0 +1,21 @@
+{
+    "initial"   : {
+        "alpha" : 100
+    },
+    "transform" : [
+        {
+            "attributes"    : {
+                "x"     : -10
+            },
+            "duration"      : 500
+        },
+        {
+            "attributes"    : {
+                "x"     : 10
+            },
+            "duration"      : 500
+        }
+    ],
+    "frequency" : 100,
+    "loop"      : true
+}

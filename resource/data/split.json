@@ -33,6 +33,14 @@
         {
             "resource_name" : "emitter_fly_in",
             "text_name"     : "飞入"
+        },
+        {
+            "resource_name" : "emitter_shake_horizon",
+            "text_name"     : "水平晃动"
+        },
+        {
+            "resource_name" : "emitter_shake_vertical",
+            "text_name"     : "垂直晃动"
         }
     ],
     "providers" : [

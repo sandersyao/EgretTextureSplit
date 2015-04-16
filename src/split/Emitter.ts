@@ -107,7 +107,7 @@ module split {
                         tween.to(transform.attributes, transform.duration)
                     });
 
-                    if (me._loop) {
+                    if (!me._loop) {
 
                         tween.call(function () {
 
