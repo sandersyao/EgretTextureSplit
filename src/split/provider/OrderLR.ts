@@ -8,10 +8,28 @@ module split.provider {
      */
     export class OrderLR extends split.Provider {
 
+        /**
+         * 当前横轴下标
+         *
+         * @type {number}
+         * @private
+         */
         private _xCurrent:number            = 0;
 
+        /**
+         * 当前纵轴下标
+         *
+         * @type {number}
+         * @private
+         */
         private _yCurrent:number            = 0;
 
+        /**
+         * 键列表
+         *
+         * @type {Array}
+         * @private
+         */
         private _keyList:Array<Array<string>>   = [];
 
         /**
@@ -80,7 +98,13 @@ module split.provider {
             return  list;
         }
 
-        private _next () {
+        /**
+         * 下一个键 没有返回false
+         *
+         * @returns {*}
+         * @private
+         */
+        private _next ():any {
 
             if ('undefined' == typeof this._keyList[this._xCurrent]) {
 
@@ -101,6 +125,11 @@ module split.provider {
             return          key;
         }
 
+        /**
+         * 初始化
+         *
+         * @private
+         */
         private _initialize ():void {
 
             var xList:Array<number>             = [],
@@ -140,6 +169,14 @@ module split.provider {
             }
         }
 
+        /**
+         * 排序方法
+         *
+         * @param a
+         * @param b
+         * @returns {number}
+         * @private
+         */
         private _sort (a, b) {
 
             if (a == b) {
