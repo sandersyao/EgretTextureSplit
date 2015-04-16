@@ -85,7 +85,12 @@ module split.provider {
 
                 var key:any = this._next();
 
-                if (false == key) {
+                if (null === key) {
+
+                    continue;
+                }
+
+                if (false === key) {
 
                     break;
                 }
@@ -113,8 +118,14 @@ module split.provider {
 
             if ('undefined' == typeof this._keyList[this._xCurrent][this._yCurrent]) {
 
-                ++ this._xCurrent;
-                this._yCurrent  = 0;
+                if (this._yCurrent >= this._keyList[this._xCurrent].length) {
+
+                    ++this._xCurrent;
+                    this._yCurrent = 0;
+                } else {
+
+                    ++ this._yCurrent;
+                }
 
                 return  this._next();
             }
