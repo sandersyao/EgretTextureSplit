@@ -98,7 +98,6 @@ module split {
 
                 if ('object' == typeof me._transform) {
 
-
                     egret.Tween.removeTweens(clip)
                     var tween:egret.Tween   = me._getTween(clip);
 
@@ -126,6 +125,13 @@ module split {
             }, this);
         }
 
+        /**
+         * 获取Tween动画实例
+         *
+         * @param clip
+         * @returns {egret.Tween}
+         * @private
+         */
         private _getTween (clip:egret.DisplayObject):egret.Tween {
 
             if (this._loop) {
