@@ -14,9 +14,9 @@ module split {
         private _transform:any;
 
         /**
-         * 变形时间
+         * 是否循环
          */
-        private _duration:number;
+        private _loop:boolean;
 
         /**
          * 定时器
@@ -42,15 +42,18 @@ module split {
          * 碎片池
          *
          * @param system
+         * @param initial
          * @param transform
-         * @param duration
+         * @param loop
+         * @param frequency
+         * @param callback
          */
-        public  constructor (system:split.SplitSystem, initial:any, transform:any, frequency:number, duration:number, callback:any = null) {
+        public  constructor (system:split.SplitSystem, initial:any, transform:Array<any>, loop:boolean, frequency:number, callback:any = null) {
 
             this._system    = system;
             this._initial   = initial;
             this._transform = transform;
-            this._duration  = duration;
+            this._loop      = loop;
             this._callback  = callback;
             this._timer     = new egret.Timer(frequency, 0);
             this._timer.addEventListener(egret.TimerEvent.TIMER, this.update, this);
@@ -95,22 +98,42 @@ module split {
 
                 if ('object' == typeof me._transform) {
 
-                    egret.Tween.removeTweens(clip);
-                    egret.Tween.get(clip).to(me._transform, me._duration).call(function () {
 
-                        egret.Tween.pauseTweens(clip);
-                        egret.Tween.removeTweens(clip);
+                    egret.Tween.removeTweens(clip)
+                    var tween:egret.Tween   = me._getTween(clip);
 
-                        if ('function' == typeof me._callback) {
+                    me._transform.forEach(function (transform) {
 
-                            me._callback(clip);
-                        }
-                    }, me);
+                        tween.to(transform.attributes, transform.duration)
+                    });
+
+                    if (me._loop) {
+
+                        tween.call(function () {
+
+                            egret.Tween.removeTweens(clip);
+
+                            if (null != me._callback) {
+
+                                me._callback.apply(me, [clip]);
+                            }
+                        }, me);
+                    }
                 } else if ('function' == typeof me._transform) {
 
                     me._transform.apply(me, [clip]);
                 }
             }, this);
+        }
+
+        private _getTween (clip:egret.DisplayObject):egret.Tween {
+
+            if (this._loop) {
+
+                return  egret.Tween.get(clip, {"loop":this._loop});
+            }
+
+            return  egret.Tween.get(clip);
         }
 
         /**
@@ -119,7 +142,7 @@ module split {
          * @param target
          * @private
          */
-        private _initialize (target:any) {
+        private _initialize (target:any):void {
 
             for (var attr in this._initial) {
 

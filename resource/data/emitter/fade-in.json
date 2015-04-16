@@ -2,9 +2,11 @@
     "initial":{
         "alpha" : 0
     },
-    "transform" : {
-        "alpha" : 100
-    },
-    "frequency" : 100,
-    "duration"  : 100
+    "transform" : [
+        {
+            "attributes"    : {"alpha" : 100},
+            "duration"      : 100
+        }
+    ],
+    "frequency" : 100
 }

@@ -122,14 +122,14 @@ module split {
          * @param emitterConfig
          * @returns {split.Emitter}
          */
-        public  emit (emitterConfig:{initial:Object;transform:Object;frequency:number;duration:number;callback:any}):split.Emitter {
+        public  emit (emitterConfig:{initial:Object;transform:Array<any>;frequency:number;loop:boolean;callback:any}):split.Emitter {
 
             var emitter:split.Emitter   = new split.Emitter(
                 this,
                 emitterConfig.initial,
                 emitterConfig.transform,
+                emitterConfig.loop,
                 emitterConfig.frequency,
-                emitterConfig.duration,
                 emitterConfig.callback
             );
 
