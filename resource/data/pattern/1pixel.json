@@ -2,5 +2,6 @@
     "name"      : "Rectangle",
     "width"     : 1,
     "height"    : 1,
-    "numClone"  : 1
+    "numClone"  : 1,
+    "rotation"  : 0
 }

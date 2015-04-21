@@ -34,12 +34,17 @@ module split.pattern {
         private _numClone:number;
 
         /**
+         * 角度
+         */
+        private _rotation:number;
+
+        /**
          * 构造函数
          *
          * @param system
          * @param config
          */
-        public constructor (system:split.SplitSystem, config:{width:number;height:number;numClone:number}) {
+        public constructor (system:split.SplitSystem, config:{width:number;height:number;numClone:number;rotation:number}) {
 
             super();
             this._rectangle     = new egret.Rectangle;
@@ -47,6 +52,7 @@ module split.pattern {
             this._clipWidth     = 0 == config.width     ? system.box.width  : config.width;
             this._clipHeight    = 0 == config.height    ? system.box.height : config.height;
             this._numClone      = config.numClone;
+            this._rotation      = config.rotation;
         }
 
         /**
@@ -54,13 +60,23 @@ module split.pattern {
          */
         public  initPool ():void {
 
-            for (var offsetX:number = this._system.box.x; offsetX < this._system.box.width; offsetX += this._clipWidth) {
+            this._rotate();
+            var boxWidth    = 0 === this._system.box.width
+                            ? this._system.targetContainer.measuredWidth
+                            : this._system.box.width,
+                boxHeight   = 0 ===  this._system.box.height
+                            ? this._system.targetContainer.measuredHeight
+                            : this._system.box.height,
+                initPoint   = split.Pattern.getRectangleLeftTop(this._system.box.x, this._system.box.y, boxWidth, boxHeight, this._rotation);
 
-                for (var offsetY:number = this._system.box.y; offsetY < this._system.box.height; offsetY += this._clipHeight) {
+            for (var offsetX:number = initPoint.x; offsetX < boxWidth; offsetX += this._clipWidth) {
+
+                for (var offsetY:number = initPoint.y; offsetY < boxHeight; offsetY += this._clipHeight) {
 
                     var texture:egret.RenderTexture = new egret.RenderTexture;
+
                     texture.drawToTexture(
-                        this._system.target,
+                        this._system.targetContainer,
                         this._rectangle.initialize(offsetX, offsetY, this._clipWidth, this._clipHeight),
                         1
                     );
@@ -73,6 +89,28 @@ module split.pattern {
                     this._setPool(offsetX, offsetY, texture);
                 }
             }
+
+            this._rotateRevert();
+        }
+
+        /**
+         * 旋转
+         *
+         * @private
+         */
+        private _rotate () {
+
+            this._system.target.rotation = this._rotation;
+        }
+
+        /**
+         * 恢复角度
+         *
+         * @private
+         */
+        private _rotateRevert () {
+
+            this._system.target.rotation = 0;
         }
 
         /**
@@ -95,6 +133,7 @@ module split.pattern {
             for (var offset = 0; offset <  this._numClone; offset ++) {
 
                 var bmp:egret.Bitmap = new egret.Bitmap(texture);
+                bmp.rotation    = 0 - this._rotation;
                 this._system.pool[key].push(bmp);
             }
         }

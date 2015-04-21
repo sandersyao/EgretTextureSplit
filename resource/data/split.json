@@ -15,6 +15,10 @@
         {
             "resource_name" : "pattern_square",
             "text_name"     : "正方"
+        },
+        {
+            "resource_name" : "pattern_square_oblique",
+            "text_name"     : "倾斜"
         }
     ],
     "emitters"  : [

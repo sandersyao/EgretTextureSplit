@@ -34,6 +34,11 @@ module split {
         private _box:{x:number;y:number;width:number;height:number};
 
         /**
+         * 目标容器
+         */
+        private _targetContainer:egret.DisplayObjectContainer;
+
+        /**
          * 构造函数
          *
          * @param target    目标
@@ -42,25 +47,19 @@ module split {
         public  constructor (target:egret.DisplayObject, box:{x:number;y:number;width:number;height:number}) {
 
             super();
-            this._target    = target;
-            this._box       = {
+            this._targetContainer   = new egret.DisplayObjectContainer;
+            this._target            = target;
+            this._targetContainer.addChild(this._target);
+            this._box               = {
                 "x"       : null,
                 "y"       : null,
                 "width"   : null,
                 "height"  : null
             };
-            this._box.x     = box.x;
-            this._box.y     = box.y;
-
-            if (0 == (box.x | box.y | box.width | box.height)) {
-
-                this._box.width     = target.width;
-                this._box.height    = target.height;
-            } else {
-
-                this._box.width     = box.width;
-                this._box.height    = box.height;
-            }
+            this._box.x             = box.x;
+            this._box.y             = box.y;
+            this._box.width         = box.width;
+            this._box.height        = box.height;
         }
 
         /**
@@ -94,6 +93,16 @@ module split {
         public get target ():egret.DisplayObject {
 
             return  this._target;
+        }
+
+        /**
+         * 获取目标容器
+         *
+         * @returns {egret.DisplayObjectContainer}
+         */
+        public  get targetContainer ():egret.DisplayObjectContainer {
+
+            return  this._targetContainer;
         }
 
         /**
